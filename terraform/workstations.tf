@@ -38,12 +38,12 @@ resource "azurerm_virtual_machine" "workstation" {
   storage_image_reference {
     #id = data.azurerm_image.workstation.id
 
-    # az vm image list -f "Windows-10" --all
+    # az vm image list --offer Windows-10 --all --output table
     publisher = "MicrosoftWindowsDesktop"
-    offer     = "Windows-10"
+    offer     = var.workstations_image_version.offer
     # gensecond: see https://docs.microsoft.com/en-us/azure/virtual-machines/windows/generation-2
-    sku     = "19h1-pron"
-    version = "latest"
+    sku     = var.workstations_image_version.sku
+    version = var.workstations_image_version.version
   }
   storage_os_disk {
     name              = "wks-${count.index}-os-disk"

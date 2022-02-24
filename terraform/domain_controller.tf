@@ -32,10 +32,12 @@ resource "azurerm_virtual_machine" "dc" {
   delete_data_disks_on_termination = true
 
   storage_image_reference {
+
+    # az vm image list --offer WindowsServer --all --output table
     publisher = "MicrosoftWindowsServer"
     offer     = "WindowsServer"
-    sku       = "2019-Datacenter"
-    version   = "latest"
+    sku       = var.dc_image_version.sku
+    version   = var.dc_image_version.version
   }
   storage_os_disk {
     name              = "os-disk"

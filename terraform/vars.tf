@@ -44,3 +44,29 @@ variable "workstations_vm_size" {
   description = "Size of the workstations VMs. See https://docs.microsoft.com/en-us/azure/cloud-services/cloud-services-sizes-specs"
   default     = "Standard_D1_v2"
 }
+
+variable "dc_image_version" {
+  description = "The Windows Server image version to use for the Domain Controller VM. See https://docs.microsoft.com/en-us/azure/virtual-machines/linux/cli-ps-findimage"
+  type = object({
+    sku     = string
+    version = string
+  })
+  default = {
+    sku     = "2022-Datacenter"
+    version = "latest"
+  }
+}
+
+variable "workstations_image_version" {
+  description = "The Windows Client image version to use for the workstation VMs. See https://docs.microsoft.com/en-us/azure/virtual-machines/linux/cli-ps-findimage"
+  type = object({
+    offer   = string
+    sku     = string
+    version = string
+  })
+  default = {
+    offer   = "Windows-10"
+    sku     = "win10-21h2-pron"
+    version = "latest"
+  }
+}
