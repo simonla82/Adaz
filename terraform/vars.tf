@@ -35,8 +35,8 @@ variable "resource_group" {
   default     = "ad-hunting-lab"
 }
 
-variable "dc_vm_size" {
-  description = "Size of the Domain Controller VM. See https://docs.microsoft.com/en-us/azure/cloud-services/cloud-services-sizes-specs"
+variable "server_vm_size" {
+  description = "Size of the Windows Server VMs. See https://docs.microsoft.com/en-us/azure/cloud-services/cloud-services-sizes-specs"
   default     = "Standard_D1_v2"
 }
 
@@ -45,8 +45,8 @@ variable "workstations_vm_size" {
   default     = "Standard_D1_v2"
 }
 
-variable "dc_image_version" {
-  description = "The Windows Server image version to use for the Domain Controller VM. See https://docs.microsoft.com/en-us/azure/virtual-machines/linux/cli-ps-findimage"
+variable "server_image_version" {
+  description = "The Windows Server image version to use for the Windows Server VMs. See https://docs.microsoft.com/en-us/azure/virtual-machines/linux/cli-ps-findimage"
   type = object({
     sku     = string
     version = string

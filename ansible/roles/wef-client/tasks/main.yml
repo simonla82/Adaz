@@ -8,6 +8,6 @@
   win_regedit:
     path: HKLM:\SOFTWARE\Policies\Microsoft\Windows\EventLog\EventForwarding\SubscriptionManager
     name: "1"
-    data: "Server=http://{{ domain.dc_name }}.{{ domain.dns_name }}:5985/wsman/SubscriptionManager/WEC,Refresh=10"
+    data: "Server=http://WEC.{{ domain.dns_name }}:5985/wsman/SubscriptionManager/WEC,Refresh=10"
     type: string
   notify: gpupdate

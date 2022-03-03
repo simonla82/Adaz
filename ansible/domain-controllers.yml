@@ -5,11 +5,8 @@
   roles:
   - role: domain-controller
   - role: windows-base
-  - role: wef-collector
-    tags: [ wef ]
+  - role: wef-client
   - role: sysmon
     tags: [ sysmon ]
   - role: logging-base
     tags: [ logging-base ]
-  - role: winlogbeat
-    tags: [ winlogbeat ]

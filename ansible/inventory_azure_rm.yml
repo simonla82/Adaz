@@ -6,6 +6,7 @@ include_vm_resource_groups:
 - ad-hunting-lab
 conditional_groups:
   domain_controllers: "tags.kind == 'domain-controller'"
+  windows_event_collector: "tags.kind == 'windows-event-collector'"
   workstations: "tags.kind == 'workstation'"
   elasticsearch: "tags.kind == 'elasticsearch'"
 keyed_groups:

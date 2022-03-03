@@ -13,7 +13,7 @@ resource "azurerm_network_interface" "elasticsearch" {
     name                          = "static"
     subnet_id                     = azurerm_subnet.servers.id
     private_ip_address_allocation = "Static"
-    private_ip_address            = cidrhost(var.servers_subnet_cidr, 100)
+    private_ip_address            = cidrhost(var.servers_subnet_cidr, 101)
     public_ip_address_id          = azurerm_public_ip.elasticsearch.id
   }
 }

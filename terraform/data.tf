@@ -4,6 +4,12 @@ data "azurerm_public_ip" "main" {
   depends_on          = [azurerm_public_ip.main]
 }
 
+data "azurerm_public_ip" "wec" {
+  name                = azurerm_public_ip.wec.name
+  resource_group_name = var.resource_group
+  depends_on          = [azurerm_public_ip.wec]
+}
+
 data "azurerm_public_ip" "workstation" {
   count = length(local.domain.workstations)
 

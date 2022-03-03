@@ -1,6 +1,6 @@
 # Adaz: Active Directory Hunting Lab in Azure
 
-![](https://badgen.net/badge/icon/azure?icon=azure&label=platform) ![](https://badgen.net/github/release/christophetd/adaz) [![Maintained](https://img.shields.io/badge/maintained-Yes%20as%20of%20February%202022-green.svg)](https://shields.io/)
+![](https://badgen.net/badge/icon/azure?icon=azure&label=platform) ![](https://badgen.net/github/release/simonla82/adaz) [![Maintained](https://img.shields.io/badge/maintained-Yes%20as%20of%20February%202022-green.svg)](https://shields.io/)
 
 This project allows you to **easily spin up Active Directory labs in Azure** with domain-joined workstations, Windows Event Forwarding, Kibana, and Sysmon using Terraform/Ansible.
 
@@ -74,13 +74,13 @@ Here's an incomplete and biaised comparison with [DetectionLab](https://github.c
 
 - **Learning Active Directory**: I often have the need to test GPOs or various AD features (AppLocker, LAPS...). Having a disposable lab is a must for this.
 
-## Screenshots 
+## Screenshots
 
 ![](./screenshots/kibana.png)
 
 ![](./screenshots/dc.png)
 
-## Getting started 
+## Getting started
 
 ### Prerequisites
 
@@ -105,7 +105,7 @@ git clone https://github.com/christophetd/Adaz.git
 
 ```bash
 # Note: the virtual env needs to be in ansible/venv
-python3 -m venv ansible/venv 
+python3 -m venv ansible/venv
 source ansible/venv/bin/activate
 pip install -r ansible/requirements.txt
 deactivate

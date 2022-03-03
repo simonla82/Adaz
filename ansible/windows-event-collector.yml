@@ -1,0 +1,11 @@
+---
+- name: Configure Windows Event Collector
+  hosts: windows_event_collector
+  gather_facts: no
+  roles:
+  - role: domain-member
+  - role: windows-base
+  - role: wef-collector
+    tags: [ wef ]
+  - role: winlogbeat
+    tags: [ winlogbeat ]
