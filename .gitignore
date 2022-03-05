@@ -3,4 +3,3 @@ terraform/*.tfstate.backup
 terraform/.terraform
 ansible/venv
 ansible/*.retry
-terraform/.terraform.lock.hcl
