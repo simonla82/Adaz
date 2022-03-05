@@ -4,7 +4,7 @@
     <!-- This attribute should be included only when the subscription is created (not updated) -->
     <SubscriptionType>SourceInitiated</SubscriptionType>
 {% endif %}
-    <Description>WEF subscription for workstations</Description>
+    <Description>WEF subscription for Domain Controllers and Domain Computers</Description>
     <Enabled>true</Enabled>
     <Uri>http://schemas.microsoft.com/wbem/wsman/1/windows/EventLog</Uri>
     <ConfigurationMode>Custom</ConfigurationMode>
@@ -35,5 +35,5 @@
     <LogFile>ForwardedEvents</LogFile>
     <PublisherName>Microsoft-Windows-EventCollector</PublisherName>
     <AllowedSourceNonDomainComputers></AllowedSourceNonDomainComputers>
-    <AllowedSourceDomainComputers>O:NSG:BAD:P(A;;GA;;;DC)S:</AllowedSourceDomainComputers>
+    <AllowedSourceDomainComputers>O:NSG:BAD:P(A;;GA;;;DC)(A;;GA;;;DD)S:</AllowedSourceDomainComputers>
 </Subscription>

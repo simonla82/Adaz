@@ -11,3 +11,10 @@
     data: "Server=http://WEC.{{ domain.dns_name }}:5985/wsman/SubscriptionManager/WEC,Refresh=10"
     type: string
   notify: gpupdate
+
+- name: Allow Network Service to read "Security" and "Microsoft-Windows-Sysmon/Operational" Event Logs (only relevant for domain controllers)
+  win_command: powershell.exe -
+  args:
+    stdin: >
+      wevtutil sl Security /ca:'O:BAG:SYD:(A;;0xf0005;;;SY)(A;;0x5;;;BA)(A;;0x1;;;S-1-5-32-573)(A;;0x1;;;S-1-5-20)'
+      wevtutil sl Microsoft-Windows-Sysmon/Operational /ca:'O:BAG:SYD:(A;;0xf0005;;;SY)(A;;0x5;;;BA)(A;;0x1;;;S-1-5-32-573)(A;;0x1;;;S-1-5-20)'
