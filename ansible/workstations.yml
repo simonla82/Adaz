@@ -3,8 +3,9 @@
   hosts: workstations
   gather_facts: no
   roles:
-  - domain-member
-  - windows-base
-  - wef-client
-  - sysmon
-  - logging-base
+  - role: domain-member
+  - role: windows-base
+  - role: wef-client
+  - role: sysmon
+  - role: logging-base
+  - role: workstation-audit-policy

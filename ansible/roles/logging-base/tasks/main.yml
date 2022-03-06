@@ -3,31 +3,17 @@
     name: Event Log Readers
     members: Network Service
 
-- name: Enable process tracking
+- name: Enable process tracking # todo: Is this considered best practice or not?
   win_regedit:
     path: HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System\Audit
     name: ProcessCreationIncludeCmdLine_Enabled
     value: 1
 
-- name: Set audit policies
-  win_audit_policy_system:
-    category: "{{ item }}"
-    audit_type: success, failure
+- name: Allow Network Service to read "Security" and "Microsoft-Windows-Sysmon/Operational" Event Logs (only relevant for domain controllers)
+  win_command: powershell.exe -
+  args:
+    stdin: >
+      wevtutil sl {{ item }} /ca:'O:BAG:SYD:(A;;0xf0005;;;SY)(A;;0x5;;;BA)(A;;0x1;;;S-1-5-32-573)(A;;0x1;;;S-1-5-20)'
   with_items:
-  - Account logon
-  - Account management
-  - DS Access
-  - Logon/Logoff
-  - Privilege use
-  - Policy change
-  - System
-
-# https://support.microsoft.com/en-us/help/4047777/security-event-log-forwarding-fails-with-error-0x138c-and-5004
-- name: Set custom security descriptor on event logs
-  win_regedit:
-    path: "HKLM:\\SYSTEM\\CurrentControlSet\\Services\\EventLog\\{{ item }}"
-    name: CustomSD
-    data: "O:BAG:SYD:(D;; 0xf0007;;;AN)(D;; 0xf0007;;;BG)(A;; 0xf0007;;;SY)(A;; 0x7;;;BA)(A;; 0x7;;;SO)(A;; 0x3;;;IU)(A;; 0x2;;;BA)(A;; 0x2;;;LS)(A;; 0x2;;;NS)(A;; 0x7;;;DA)(A;; 0x1;;;S-1-5-21-xxx-xxx-xxx-xxx)"
-  with_items:
-  - Security
-  - Microsoft-Windows-Sysmon/Operational
+    - Security 
+    - Microsoft-Windows-Sysmon/Operational

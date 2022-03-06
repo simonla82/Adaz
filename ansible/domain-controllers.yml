@@ -10,3 +10,7 @@
     tags: [ sysmon ]
   - role: logging-base
     tags: [ logging-base ]
+  - role: server-audit-policy
+    tags: [ audit-policy ]
+  - role: domain-controller-audit-policy
+    tags: [ audit-policy ]

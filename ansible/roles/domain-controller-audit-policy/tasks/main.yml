@@ -1,0 +1,8 @@
+# https://docs.microsoft.com/en-us/windows-server/identity/ad-ds/plan/security-best-practices/audit-policy-recommendations#recommended-audit-policies-by-operating-system
+- name: Set domain controller stronger recommended audit policies (this is only an addition to the server audit policies!)
+  win_audit_policy_system:
+    subcategory: "{{ item }}"
+    audit_type: success, failure
+  with_items:
+    - Directory Service Access
+    - Directory Service Changes

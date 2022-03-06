@@ -1,0 +1,36 @@
+# https://docs.microsoft.com/en-us/windows-server/identity/ad-ds/plan/security-best-practices/audit-policy-recommendations#recommended-audit-policies-by-operating-system
+- name: Set workstation stronger recommended audit policies, part 1
+  win_audit_policy_system:
+    subcategory: "{{ item }}"
+    audit_type: success, failure
+  with_items:
+  - Credential Validation
+  - Kerberos Authentication Service
+  - Kerberos Service Ticket Operations
+  - Other Account Logon Events
+  - Computer Account Management
+  - Other Account Management Events
+  - Security Group Management
+  - User Account Management
+  - DPAPI Activity
+  - Process Creation
+  - IPsec Main Mode
+  - Logon
+  - Network Policy Server
+  - Special Logon
+  - Audit Policy Change
+  - Authentication Policy Change
+  - MPSSVC Rule-Level Policy Change
+  - IPsec Driver
+  - Other System Events
+  - Security State Change
+  - Security System Extension
+  - System Integrity
+
+- name: Set workstation stronger recommended audit policies, part 2
+  win_audit_policy_system:
+    subcategory: "{{ item }}"
+    audit_type: success
+  with_items:
+  - Logoff
+  - Account Lockout
