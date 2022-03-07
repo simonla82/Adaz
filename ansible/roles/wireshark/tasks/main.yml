@@ -10,3 +10,9 @@
     path: https://1.eu.dl.wireshark.org/win64/Wireshark-win64-3.6.2.exe
     product_id: Wireshark
     arguments: /NCRC /S
+
+# This requires to sign out and in again to work
+- name: Add Wireshark binaries to path
+  win_path:
+    elements:
+      - 'C:\Program Files\Wireshark\'
