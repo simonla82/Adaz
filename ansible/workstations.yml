@@ -9,3 +9,4 @@
   - role: sysmon
   - role: logging-base
   - role: workstation-audit-policy
+  - role: wireshark

@@ -14,3 +14,4 @@
     tags: [ audit-policy ]
   - role: domain-controller-audit-policy
     tags: [ audit-policy ]
+  - role: wireshark

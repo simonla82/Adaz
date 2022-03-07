@@ -1,0 +1,12 @@
+---
+- name: Install Nmap # The nmap installation is a workaround to install npcap silently
+  win_package:
+    path: https://nmap.org/dist/nmap-7.80-setup.exe
+    product_id: Nmap
+    arguments: /S
+
+- name: Install Wireshark
+  win_package:
+    path: https://1.eu.dl.wireshark.org/win64/Wireshark-win64-3.6.2.exe
+    product_id: Wireshark
+    arguments: /NCRC /S
