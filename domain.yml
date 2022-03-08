@@ -34,9 +34,14 @@ workstations:
 - name: XTOF-WKS
   local_admins: [christophe]
 
+# Servers to create and to domain-join
 servers:
 - name: srv01
   local_admins: [christophe]
+
+spns:
+- spn: http/hunter.lab
+  target: srv01
 
 # Should the Windows firewall be enabled?
 enable_windows_firewall: no

@@ -1,0 +1,27 @@
+---
+- name: Configure AD Objects
+  hosts: domain_controllers
+  gather_facts: no
+  
+  tasks:
+
+  - name: Include domain configuration file
+    include_vars:
+      file: ../domain.yml
+      name: domain
+    tags: common
+  
+  - name: Read credentials from domain configuration file
+    set_fact:
+      ansible_user: "{{ domain.initial_domain_admin.username }}"
+      ansible_password: "{{ domain.initial_domain_admin.password }}"
+    when: "packer is not defined"
+    tags: common
+
+  - name: Set SPNs
+    win_command: powershell.exe -
+    args:
+      stdin: >
+        "setspn -d {{ item.spn }} {{ item.target }}";
+        "setspn -s {{ item.spn }} {{ item.target }}";
+    with_items: "{{ domain.spns }}"

@@ -86,3 +86,20 @@ resource "null_resource" "provision_rest_of_dc_after_creation" {
     azurerm_virtual_machine.es_kibana
   ]
 }
+
+# Configure ad resources
+resource "null_resource" "configure_ad_objects" {
+  provisioner "local-exec" {
+    working_dir = "${path.root}/../ansible"
+    command     = "/bin/bash -c 'source venv/bin/activate && ansible-playbook configure-ad-objects.yml'"
+  }
+
+  # Note: the dependance on 'azurerm_virtual_machine.workstation' applies to *all* resources created from this block
+  # The provisioner will only be run once all workstations have been created (not once per workstation)
+  # c.f. https://github.com/hashicorp/terraform/issues/15285
+  depends_on = [
+    azurerm_virtual_machine.dc,
+    azurerm_virtual_machine.workstation,
+    azurerm_virtual_machine.server
+  ]
+}
