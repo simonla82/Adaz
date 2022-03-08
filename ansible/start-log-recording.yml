@@ -27,7 +27,7 @@
   gather_facts: no
   become_method: runas
 
-  tasks: 
+  tasks:
   - name: Include domain configuration file
     include_vars:
       file: ../domain.yml
@@ -38,9 +38,17 @@
       ansible_user: "{{ domain.initial_domain_admin.username }}"
       ansible_password: "{{ domain.initial_domain_admin.password }}"
 
+  - name: Get user's public ip
+    ipify_facts:
+    delegate_to: localhost
+    register: public_ip
+    
+  - name: output
+    debug: msg="{{ ipify_public_ip }}/32"
+
   - name: Start tshark capture
     become: yes
     become_user: "hunter.lab\\hunter"
     async: 10
     poll: 0
-    win_shell: start-process tshark.exe -Wait -Argumentlist "-f `"not net 10.0.10.100/32`" -i Ethernet -w \\WEC\logs\{{ inventory_hostname_short }}.pcap"
+    win_shell: start-process tshark.exe -Wait -Argumentlist "-f `"not net 10.0.10.200/32 and not net 168.63.129.16/32 and not net {{ ipify_public_ip }}/32`" -i Ethernet -w \\WEC\logs\{{ inventory_hostname_short }}.pcap"
