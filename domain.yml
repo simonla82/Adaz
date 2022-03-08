@@ -33,8 +33,10 @@ default_local_admin:
 workstations:
 - name: XTOF-WKS
   local_admins: [christophe]
-- name: DANY-WKS
-  local_admins: [dany]
+
+servers:
+- name: srv01
+  local_admins: [christophe]
 
 # Should the Windows firewall be enabled?
 enable_windows_firewall: no

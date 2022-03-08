@@ -18,6 +18,14 @@ data "azurerm_public_ip" "workstation" {
   depends_on          = [azurerm_public_ip.workstation]
 }
 
+data "azurerm_public_ip" "server" {
+  count = length(local.domain.servers)
+
+  name                = azurerm_public_ip.server[count.index].name
+  resource_group_name = var.resource_group
+  depends_on          = [azurerm_public_ip.server]
+}
+
 data "azurerm_public_ip" "elasticsearch" {
   name                = azurerm_public_ip.elasticsearch.name
   resource_group_name = var.resource_group

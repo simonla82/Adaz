@@ -20,6 +20,7 @@ resource "azurerm_network_interface_security_group_association" "workstation" {
   network_interface_id      = azurerm_network_interface.workstation[count.index].id
   network_security_group_id = azurerm_network_security_group.windows.id
 }
+
 resource "azurerm_virtual_machine" "workstation" {
   count = length(local.domain.workstations)
 

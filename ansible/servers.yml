@@ -1,0 +1,12 @@
+---
+- name: Configure servers
+  hosts: server
+  gather_facts: no
+  roles:
+  - role: domain-member
+  - role: windows-base
+  - role: wef-client
+  - role: sysmon
+  - role: logging-base
+  - role: server-audit-policy
+  - role: wireshark
