@@ -1,0 +1,40 @@
+---
+- name: Export Forwarded Events event log to file
+  hosts: [windows_event_collector]
+  gather_facts: no
+
+  tasks:
+  - name: Include domain configuration file
+    include_vars:
+      file: ../domain.yml
+      name: domain
+
+  - name: Read credentials from domain configuration file
+    set_fact:
+      ansible_user: "{{ domain.initial_domain_admin.username }}"
+      ansible_password: "{{ domain.initial_domain_admin.password }}"
+
+  - name: Export ForwardedEvents event log
+    win_shell: wevtutil epl ForwardedEvents "C:\shares\logs\ForwardedEvents.evtx"
+
+- name: Stop recording network captures
+  hosts: [domain_controllers, server,  workstations]
+  gather_facts: no
+  become_method: runas
+
+  tasks: 
+  - name: Include domain configuration file
+    include_vars:
+      file: ../domain.yml
+      name: domain
+
+  - name: Read credentials from domain configuration file
+    set_fact:
+      ansible_user: "{{ domain.initial_domain_admin.username }}"
+      ansible_password: "{{ domain.initial_domain_admin.password }}"
+
+  - name: Stop tshark capture # It would be nicer to cleanly exit tshark but atm there exist no such option in tshark
+    become: yes
+    become_user: "hunter.lab\\hunter"
+    ignore_errors: yes
+    win_shell: taskkill /im tshark.exe /f

@@ -54,3 +54,15 @@
   win_command: 'netsh http add urlacl url=http://+:5985/wsman/ sddl=D:(A;;GX;;;S-1-5-80-569256582-2953403351-2909559716-1301513147-412116970)(A;;GX;;;S-1-5-80-4059739203-877974739-1245631912-527174227-2996563517)'
   when: netsh_urlacl_remove.changed or 'http://+:5985/wsman/' not in netsh_urlacl.stdout
   notify: restart wec service
+
+- name: Create directory structure for log file share
+  ansible.windows.win_file:
+    path: C:\shares\logs
+    state: directory
+
+- name: Add SMB Share for log files
+  ansible.windows.win_share:
+    name: logs
+    path: C:\shares\logs
+    list: no
+    full: "hunter.lab\\Domain Users"

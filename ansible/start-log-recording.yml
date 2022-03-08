@@ -1,0 +1,46 @@
+---
+- name: Remove all previous logs
+  hosts: [windows_event_collector]
+  gather_facts: no
+
+  tasks:
+  - name: Include domain configuration file
+    include_vars:
+      file: ../domain.yml
+      name: domain
+
+  - name: Read credentials from domain configuration file
+    set_fact:
+      ansible_user: "{{ domain.initial_domain_admin.username }}"
+      ansible_password: "{{ domain.initial_domain_admin.password }}"
+
+  - name: Clear Forwarded Events log
+    win_shell: wevtutil cl forwardedevents
+
+  - name: Remove previous log files
+    win_command: powershell.exe -
+    args:
+      stdin: Get-Childitem "\\WEC\logs\" -File | Remove-Item
+
+- name: Start recording network captures
+  hosts: [domain_controllers, server,  workstations]
+  gather_facts: no
+  become_method: runas
+
+  tasks: 
+  - name: Include domain configuration file
+    include_vars:
+      file: ../domain.yml
+      name: domain
+
+  - name: Read credentials from domain configuration file
+    set_fact:
+      ansible_user: "{{ domain.initial_domain_admin.username }}"
+      ansible_password: "{{ domain.initial_domain_admin.password }}"
+
+  - name: Start tshark capture
+    become: yes
+    become_user: "hunter.lab\\hunter"
+    async: 10
+    poll: 0
+    win_shell: start-process tshark.exe -Wait -Argumentlist "-f `"not net 10.0.10.100/32`" -i Ethernet -w \\WEC\logs\{{ inventory_hostname_short }}.pcap"
