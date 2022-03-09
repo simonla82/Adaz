@@ -15,7 +15,39 @@
       ansible_password: "{{ domain.initial_domain_admin.password }}"
 
   - name: Export ForwardedEvents event log
-    win_shell: wevtutil epl ForwardedEvents "C:\shares\logs\ForwardedEvents.evtx"
+    win_shell: wevtutil epl ForwardedEvents "\\WEC\logs\ForwardedEvents.evtx"
+
+  - name: Download winlogbeat
+    win_get_url:
+      url: https://artifacts.elastic.co/downloads/beats/winlogbeat/winlogbeat-8.1.0-windows-x86_64.zip
+      dest: C:\Temp\winlogbeat.zip
+      checksum_url: https://artifacts.elastic.co/downloads/beats/winlogbeat/winlogbeat-8.1.0-windows-x86_64.zip.sha512
+      checksum_algorithm: sha512
+      force: true
+  
+  - name: Unzip winlogbeat
+    win_unzip:
+      src: C:\Temp\winlogbeat.zip
+      dest: C:\Temp\winlogbeat
+
+  - name: Upload winlogbeat template 
+    win_template:
+      src: ./templates/winlogbeat-evtx.yml
+      dest: C:\Temp\winlogbeat-evtx.yml
+
+  - name: Convert log file to json file readable by elk stack
+    win_shell: C:\Temp\winlogbeat\winlogbeat-8.1.0-windows-x86_64\winlogbeat.exe -e -c C:\Temp\winlogbeat-evtx.yml -E EVTX_FILE=\\WEC\logs\ForwardedEvents.evtx
+    async: 20
+    poll: 0
+
+  - name: Wait for winlogbeat to finish
+    wait_for:
+      timeout: 20
+    delegate_to: localhost
+  
+  - name: Abort winlogbeat task # this is necessary due to a but in winlogbeat (see https://github.com/elastic/beats/pull/30006)
+    ignore_errors: yes
+    win_shell: taskkill /im winlogbeat.exe /f
 
 - name: Stop recording network captures
   hosts: [domain_controllers, server,  workstations]

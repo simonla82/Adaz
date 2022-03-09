@@ -7,5 +7,3 @@
   - role: windows-base
   - role: wef-collector
     tags: [ wef ]
-  - role: winlogbeat
-    tags: [ winlogbeat ]

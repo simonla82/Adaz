@@ -1,0 +1,11 @@
+winlogbeat.event_logs:
+  - name: ${EVTX_FILE}
+    forwarded: true
+
+winlogbeat.shutdown_timeout: 1s 
+winlogbeat.registry_file: evtx-registry.yml 
+
+output.file:
+  enabled: true
+  path: \\WEC\logs\
+  filename: ForwardedEvents
