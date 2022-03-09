@@ -72,7 +72,6 @@ resource "null_resource" "provision_wec_once_dc_has_been_created" {
   # c.f. https://github.com/hashicorp/terraform/issues/15285
   depends_on = [
     azurerm_virtual_machine.dc,
-    azurerm_virtual_machine.wec,
-    azurerm_virtual_machine.es_kibana
+    azurerm_virtual_machine.wec
   ]
 }

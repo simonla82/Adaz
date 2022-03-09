@@ -13,17 +13,6 @@ variable "workstations_subnet_cidr" {
   default     = "10.0.11.0/24"
 }
 
-variable "elasticsearch_admin_user" {
-  description = "Name of the initial admin user on the Elasticsearch / Kibana machine"
-  # Warning: if you change this, also change it in ansible/elasticsearch-kibana.yml
-  default = "hunter"
-}
-
-variable "ssh_key" {
-  description = "Path to SSH key to add to the Elasticsearch / Kibana instance"
-  default     = "~/.ssh/id_rsa.pub"
-}
-
 variable "region" {
   description = "Azure region in which resources should be created. See https://azure.microsoft.com/en-us/global-infrastructure/locations/"
   default     = "West Europe"

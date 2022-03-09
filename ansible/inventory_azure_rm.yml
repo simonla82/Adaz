@@ -9,7 +9,6 @@ conditional_groups:
   server: "tags.kind == 'server'"
   windows_event_collector: "tags.kind == 'windows-event-collector'"
   workstations: "tags.kind == 'workstation'"
-  elasticsearch: "tags.kind == 'elasticsearch'"
 keyed_groups:
 - prefix: tag
   key: tags
